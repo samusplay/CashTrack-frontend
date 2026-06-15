@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 }
 
 //el formualrio se eejcuta en el cliente
-export default function RegisterPage() {
+export default function LoginPage() {
 
 
     return (
