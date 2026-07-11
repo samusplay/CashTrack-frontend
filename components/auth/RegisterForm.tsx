@@ -2,12 +2,22 @@
 
 import { register } from "@/actions/create-account-action"
 
+import { useFormState } from "react-dom"
+
 export default function RegisterForm() {
+    //destrcuturamos con su firma un state , y el dispatch que va ahcer llamar
+    //la funcion que maneja el Action de register
+    //el state son los errores 
+    const [state,dispatch]=useFormState(register,{
+        errors:[]
+    })
+    console.log(state)
+
     return (
         <form
             className="mt-14 space-y-5"
             noValidate
-            action={register}
+            action={dispatch}
         >
             <div className="flex flex-col gap-2">
                 <label
