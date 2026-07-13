@@ -4,13 +4,15 @@ import { register } from "@/actions/create-account-action"
 
 import { useFormState } from "react-dom"
 import ErrorMessage from "../ui/ErrorMessage"
+import SuccessMessage from "../ui/SuccessMessage"
 
 export default function RegisterForm() {
     //destrcuturamos con su firma un state , y el dispatch que va ahcer llamar
     //la funcion que maneja el Action de register
     //el state son los errores 
     const [state,dispatch]=useFormState(register,{
-        errors:[]
+        errors:[],
+        success:''
     })
     
     //
@@ -22,6 +24,7 @@ export default function RegisterForm() {
         >
              {/* Aqui accedemos al arreglo de errores para mostralos y pasamos propss  */}
             {state.errors.map(error=><ErrorMessage>{error}</ErrorMessage>)}
+            {state.success &&<SuccessMessage>{state.success}</SuccessMessage>}
             <div className="flex flex-col gap-2">
                 <label
                     className="font-bold text-2xl"

@@ -1,9 +1,10 @@
 "use server"
 
-import { RegisterSchema } from "@/src/schemas";
+import { RegisterSchema, SucccessSchema } from "@/src/schemas";
 
 type ActionStateType = {
     errors: string[];
+    success: string
 }
 //los server actions son funciones asincronas
 // Se debe usar el objeto de formdata para capturar los datos del formulario
@@ -30,7 +31,8 @@ export async function register(prevState: ActionStateType, formData: FormData) {
         //acceder a los errores atravez del arreglo
         const errors = register.error.issues.map(error => error.message)
         return {
-            errors
+            errors,
+            success: prevState.success
         }
 
     }
@@ -54,10 +56,14 @@ export async function register(prevState: ActionStateType, formData: FormData) {
     })
     //devuelve la repuesta de nuestro servidor
     const json = await req.json()
-    console.log(json)
+    //retorna solo un valor no hace validaciones
+    const success = SucccessSchema.parse(json)
     //tenemos que retornar los errores si todo salio bien
-    return{
-        errors:[]
+    return {
+        //toma el valor inicial del PrevState
+        errors: prevState.errors,
+        //genera un esquema de que ese success es un string 
+        success
     }
 
 }
