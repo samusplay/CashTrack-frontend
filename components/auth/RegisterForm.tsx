@@ -3,6 +3,7 @@
 import { register } from "@/actions/create-account-action"
 
 import { useFormState } from "react-dom"
+import ErrorMessage from "../ui/ErrorMessage"
 
 export default function RegisterForm() {
     //destrcuturamos con su firma un state , y el dispatch que va ahcer llamar
@@ -11,14 +12,16 @@ export default function RegisterForm() {
     const [state,dispatch]=useFormState(register,{
         errors:[]
     })
-    console.log(state)
-
+    
+    //
     return (
         <form
             className="mt-14 space-y-5"
             noValidate
             action={dispatch}
         >
+             {/* Aqui accedemos al arreglo de errores para mostralos y pasamos propss  */}
+            {state.errors.map(error=><ErrorMessage>{error}</ErrorMessage>)}
             <div className="flex flex-col gap-2">
                 <label
                     className="font-bold text-2xl"
