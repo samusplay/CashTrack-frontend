@@ -1,6 +1,6 @@
 "use server"
 
-import { RegisterSchema, SucccessSchema } from "@/src/schemas";
+import { ErrorResponseSchema, RegisterSchema, SucccessSchema } from "@/src/schemas";
 
 type ActionStateType = {
     errors: string[];
@@ -54,14 +54,29 @@ export async function register(prevState: ActionStateType, formData: FormData) {
 
         })
     })
+    
     //devuelve la repuesta de nuestro servidor
     const json = await req.json()
+    //evaluar duplicacion del 409 
+    if(req.status===409){
+
+        //creamos una constante con Schema evaluamos el Json
+        const {error}=ErrorResponseSchema.parse(json)
+
+        return{
+            //generamos tambien el arreglo de errores extrae
+            errors:[error],
+            success:''
+        }
+
+    }
+    
     //retorna solo un valor no hace validaciones
     const success = SucccessSchema.parse(json)
     //tenemos que retornar los errores si todo salio bien
     return {
         //toma el valor inicial del PrevState
-        errors: prevState.errors,
+        errors:[],
         //genera un esquema de que ese success es un string 
         success
     }

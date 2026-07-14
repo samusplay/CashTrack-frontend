@@ -17,3 +17,7 @@ export const RegisterSchema = z.object({
 })
 
 export const  SucccessSchema=z.string().min(1,{message:'Valor no valido'})
+
+export const ErrorResponseSchema=z.object({
+    error:z.string()
+})
