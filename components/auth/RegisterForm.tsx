@@ -2,11 +2,17 @@
 
 import { register } from "@/actions/create-account-action"
 
+import { useEffect, useRef } from "react"
 import { useFormState } from "react-dom"
 import ErrorMessage from "../ui/ErrorMessage"
 import SuccessMessage from "../ui/SuccessMessage"
 
 export default function RegisterForm() {
+
+    //usamos generic para cambiar dato null cuando
+    //SE MONTE EL COMPONENTE
+
+    const ref=useRef<HTMLFormElement>(null)
     //destrcuturamos con su firma un state , y el dispatch que va ahcer llamar
     //la funcion que maneja el Action de register
     //el state son los errores 
@@ -14,10 +20,18 @@ export default function RegisterForm() {
         errors:[],
         success:''
     })
-    
+    //limpiar el formulario cambios
+    useEffect(()=>{
+        if(state.success){
+            ref.current?.reset()
+
+        }
+
+    },[state])
     //
     return (
         <form
+            ref={ref}
             className="mt-14 space-y-5"
             noValidate
             action={dispatch}
