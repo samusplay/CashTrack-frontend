@@ -2,13 +2,16 @@
 
 import { confirmAccount } from "@/actions/confirm-account-action"
 import { PinInput, PinInputField } from "@chakra-ui/pin-input"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
-
+//argumentos adicionales al server action 
 export default function ConfirmAccountForm(){
+    const[isComplete,setIsComlete]=useState(false)
     //usestate para guardar el estado
     //hay que enviar el token al server action
     const [token,setToken]=useState("")
+    //use efecct para cuando algo va cambiar
+   
 
     //genera una nueva funcion para pasar datos adicionales
     const confirmAccountWithToken=confirmAccount.bind(null,token)
@@ -19,6 +22,14 @@ export default function ConfirmAccountForm(){
         errors:[]
     })
 
+     useEffect(()=>{
+        if(isComplete){
+            dispatch()
+        }
+
+        //utiliza un arreglo de dependencias osea cuando solo cambie es variable
+    },[isComplete])
+
     //funcion manejadora guardar el token
     const handleChange=(token:string)=>{
         //set almacena datos unicos es una estrctura de datos
@@ -28,7 +39,7 @@ export default function ConfirmAccountForm(){
     //disparamos un evento en automatico
     //mandar a llamar el server action y comprobarlo
     const handleComplete=()=>{
-       dispatch()
+       setIsComlete(true)
 
     }
 
