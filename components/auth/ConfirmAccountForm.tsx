@@ -2,13 +2,17 @@
 
 import { confirmAccount } from "@/actions/confirm-account-action"
 import { PinInput, PinInputField } from "@chakra-ui/pin-input"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
 import { toast } from "react-toastify"
-import SuccessMessage from "../ui/SuccessMessage"
 
 //argumentos adicionales al server action 
 export default function ConfirmAccountForm(){
+    //hook del router solo lo llamamos
+    const router=useRouter()
+
+    
     const[isComplete,setIsComlete]=useState(false)
     //usestate para guardar el estado
     //hay que enviar el token al server action
@@ -41,6 +45,17 @@ export default function ConfirmAccountForm(){
                toast.error(error)
             })
         }
+        if(state.success){
+            //le pasamos ese state que va renderizar
+            toast.success(state.success,{
+                //coidigo que cuando cierre el toast redireccione
+                onClose:()=>{
+                    //redirigimos al login
+                    router.push('/auth/login')
+
+                }
+            })
+        }
 
         //escucha cuando los cambios ya estan
     },[state])
@@ -66,7 +81,7 @@ export default function ConfirmAccountForm(){
     return(
         <>
         
-        {state.success &&<SuccessMessage>{state.success}</SuccessMessage>}
+       
         <div className='flex justify-center gap-5 my-10'>
             
             <PinInput

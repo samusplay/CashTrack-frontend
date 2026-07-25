@@ -23,7 +23,7 @@ export async function confirmAccount( token:string,prevState:ActionStateType){
     }
 
    //enviamos peticion a  a la api con la variable de entorno
-    const url = `${process.env.API_URL}/auth/confirm-account `
+    const url = `${process.env.API_URL}/auth/confirm-account`
     //utilizamos fecth porque next.js utiliza Node en el servidor
     const req = await fetch(url, {
         method: 'POST',
@@ -36,9 +36,12 @@ export async function confirmAccount( token:string,prevState:ActionStateType){
            token:confirmToken.data
         })
     })
+    
     const json=await req.json()
-    const {error}=ErrorResponseSchema.parse(json)
+    
+    //Parseamos cuando llega el error
     if(!req.ok){
+        const {error}=ErrorResponseSchema.parse(json)
         return{
             errors:[error],
             success:''
