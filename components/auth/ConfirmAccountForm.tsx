@@ -4,7 +4,7 @@ import { confirmAccount } from "@/actions/confirm-account-action"
 import { PinInput, PinInputField } from "@chakra-ui/pin-input"
 import { useEffect, useState } from "react"
 import { useFormState } from "react-dom"
-import ErrorMessage from "../ui/ErrorMessage"
+import { toast } from "react-toastify"
 import SuccessMessage from "../ui/SuccessMessage"
 
 //argumentos adicionales al server action 
@@ -30,12 +30,24 @@ export default function ConfirmAccountForm(){
         if(isComplete){
             dispatch()
         }
-
         //utiliza un arreglo de dependencias osea cuando solo cambie es variable
     },[isComplete])
 
+    //vamos usar Useffecct ya que remosc audno tenga errores mandemmos con Toast
+    useEffect(()=>{
+        //si se cumple la con dicion de los errores se av eejcutar
+        if(state.errors){
+            state.errors.forEach(error=>{
+               toast.error(error)
+            })
+        }
+
+        //escucha cuando los cambios ya estan
+    },[state])
+
     //funcion manejadora guardar el token
     const handleChange=(token:string)=>{
+        setIsComlete(false)
         //set almacena datos unicos es una estrctura de datos
         setToken(token)
        
@@ -53,7 +65,7 @@ export default function ConfirmAccountForm(){
     //esos parentesis son renderziar los subcomponetes pasandoles props
     return(
         <>
-        {state.errors.map(error=><ErrorMessage>{error}</ErrorMessage>)}
+        
         {state.success &&<SuccessMessage>{state.success}</SuccessMessage>}
         <div className='flex justify-center gap-5 my-10'>
             

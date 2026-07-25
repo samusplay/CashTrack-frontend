@@ -2,6 +2,7 @@
 //el children es para que inyecte el codigo
 
 import Logo from "@/components/ui/Logo";
+import ToastNotification from "@/components/ui/ToastNotification";
 
 //copiar
 export default function AuthLayout({
@@ -26,7 +27,7 @@ export default function AuthLayout({
 
                 </div>
             </div>
-
+         <ToastNotification/>
         </>
 
     );
