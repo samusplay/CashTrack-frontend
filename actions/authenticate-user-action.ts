@@ -1,6 +1,6 @@
 'use server'
 
-import { LoginSchema } from "@/src/schemas"
+import { ErrorResponseSchema, LoginSchema } from "@/src/schemas"
 //creamos un Type para ese prevState hace parte del 3 paso
 type ActionStateType={
     errors:string[]
@@ -48,7 +48,17 @@ export async function authenticacte(prevState:ActionStateType,formData:FormData)
     })
     //3 Paso esperar la respuesta del Request y pasarla en JSON
     const json=await req.json()
-    console.log(req.ok)
+    //condicion 4
+    if(!req.ok){
+        //destruturacion para guardar en un propiedad en  una variable
+        //extraer la propiead de error
+        const {error}=ErrorResponseSchema.parse(json)
+        return{
+            //cualquiera de los tres ecenarios
+            errors:[error]
+
+        }
+    }
     console.log(json)
 
 
