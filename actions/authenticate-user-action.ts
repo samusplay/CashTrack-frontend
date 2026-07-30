@@ -1,6 +1,7 @@
 'use server'
 
 import { ErrorResponseSchema, LoginSchema } from "@/src/schemas"
+import { cookies } from "next/headers"
 //creamos un Type para ese prevState hace parte del 3 paso
 type ActionStateType={
     errors:string[]
@@ -59,9 +60,16 @@ export async function authenticacte(prevState:ActionStateType,formData:FormData)
 
         }
     }
-    console.log(json)
-
-
+   //1.COOKIES
+   //setear 
+   cookies().set({
+    //objeto de configuraciones de la cookie require minimo name y value
+    name:'CASHTRACKR_TOKEN',
+    value:json,
+    //solamente el servidor puede acceder al cookie si es true
+    httpOnly:true,
+    path:'/'
+   })
 
 
     //retornamos los errores para darle consistencia pero Vacio
