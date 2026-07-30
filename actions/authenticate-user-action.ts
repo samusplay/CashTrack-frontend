@@ -31,6 +31,29 @@ export async function authenticacte(prevState:ActionStateType,formData:FormData)
             errors:auth.error.issues.map(issue=>issue.message)
         }
     }
+    //ENVIO PETICION BACKEND
+    const url = `${process.env.API_URL}/auth/login`
+    //le pasamos la configuracion de envio si lo dejamos vacio por default es GET
+    const req=await fetch(url,{
+        method:"POST",
+        headers:{
+            'Content-type':'application/json'
+
+        },
+        //pasamos formato Json
+        body:JSON.stringify({
+            password:auth.data.password,
+            email:auth.data.email
+        })
+    })
+    //3 Paso esperar la respuesta del Request y pasarla en JSON
+    const json=await req.json()
+    console.log(req.ok)
+    console.log(json)
+
+
+
+
     //retornamos los errores para darle consistencia pero Vacio
     //Ya que hasta este punto no hay errores
     //devolvemos el tipo de dato Para que no sea Undefined
