@@ -24,13 +24,22 @@ export const LoginSchema = z.object({
                 .min(1, {message: 'El Password no puede ir vacio'})
 })
 
+
+
+//esqema validar codigo de confirmacion de cuenta
+export const TokenSchema=z.string(({message:'Token no valido'}))
+.min(6,{message:'Token no valido'})
+.max(6,{message:'Token no valido'})
+
+
 export const  SucccessSchema=z.string().min(1,{message:'Valor no valido'})
 
 export const ErrorResponseSchema=z.object({
     error:z.string()
 })
 
-//esqema validar codigo de confirmacion de cuenta
-export const TokenSchema=z.string(({message:'Token no valido'}))
-.min(6,{message:'Token no valido'})
-.max(6,{message:'Token no valido'})
+export const UserSchema = z.object({
+        id: z.number(),
+        name: z.string(),
+        email: z.string().email()
+})

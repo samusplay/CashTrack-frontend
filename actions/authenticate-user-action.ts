@@ -2,6 +2,7 @@
 
 import { ErrorResponseSchema, LoginSchema } from "@/src/schemas"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 //creamos un Type para ese prevState hace parte del 3 paso
 type ActionStateType={
     errors:string[]
@@ -70,14 +71,16 @@ export async function authenticacte(prevState:ActionStateType,formData:FormData)
     httpOnly:true,
     path:'/'
    })
+   //REDIRECT SE USA PARA SERVER COMPONENTS
+   redirect('/admin')
 
-
-    //retornamos los errores para darle consistencia pero Vacio
+   //retornamos los errores para darle consistencia pero Vacio
     //Ya que hasta este punto no hay errores
     //devolvemos el tipo de dato Para que no sea Undefined
-    return{
-        errors:[]
-    }
+    //ya no hay necsidad con el Redirect debido 
+
+
+    
 
 
 }
