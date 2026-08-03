@@ -1,3 +1,4 @@
+import AdminMenu from "@/components/admin/AdminMenu";
 import Logo from "@/components/ui/Logo";
 import ToastNotification from "@/components/ui/ToastNotification";
 import { verifySession } from "@/src/auth/dal";
@@ -9,7 +10,10 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }>) {
     //funcion verifica si tiene la cookie
-    await verifySession()
+    //hacemos destruturacion p
+    const {user}=await verifySession()
+    //Admin Menu debe pasarle props para aceptarlo
+    //conmo extrameos la priedad del User se la psamos a la funcion de Admin menu
   return (
     <>
       <header className='bg-purple-950 py-5'>
@@ -19,6 +23,9 @@ export default async function AdminLayout({
                 <Logo />
             </Link>
           </div>
+          <AdminMenu
+          user={user}
+          />
         </div>
       </header>
       <section className='max-w-5xl mx-auto mt-20 p-3 py-10'>

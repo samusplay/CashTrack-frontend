@@ -43,3 +43,7 @@ export const UserSchema = z.object({
         name: z.string(),
         email: z.string().email()
 })
+
+//definir schemas tambien Gnerar Types para el panel de admin
+//Pasamos un esquema de Zod a un type
+export type User=z.infer<typeof UserSchema>
