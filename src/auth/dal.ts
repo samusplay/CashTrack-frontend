@@ -1,3 +1,6 @@
+//Usamos server only ya que solo se quedara en el servidor de next
+import "server-only"
+
 //DATA Access layer
 //CAPA PARA saber si esta autenticado
 import { cookies } from "next/headers"

@@ -1,5 +1,6 @@
 "use client"
 
+import { logout } from '@/actions/logout-user-action'
 import { User } from '@/src/schemas'
 import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react'
 import { Bars3Icon } from '@heroicons/react/20/solid'
@@ -41,7 +42,9 @@ export default function AdminMenu({user}:{user:User}) {
             <button
                 className='block p-2 hover:text-purple-950'
                 type='button'
-                onClick={ () => {}}
+                onClick={ async() => {
+                  await logout()
+                }}
             >
                 Cerrar Sesión
             </button>
