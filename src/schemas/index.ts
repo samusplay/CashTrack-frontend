@@ -32,6 +32,14 @@ export const TokenSchema=z.string(({message:'Token no valido'}))
 .max(6,{message:'Token no valido'})
 
 
+export const ForgotPasswordSchema = z.object({
+        email: z.string()   
+                .min(1, {message: 'El Email es Obligatorio'})
+                .email( {message: 'Email no válido'}),
+    })
+
+
+
 export const  SucccessSchema=z.string().min(1,{message:'Valor no valido'})
 
 export const ErrorResponseSchema=z.object({
@@ -43,6 +51,7 @@ export const UserSchema = z.object({
         name: z.string(),
         email: z.string().email()
 })
+
 
 //definir schemas tambien Gnerar Types para el panel de admin
 //Pasamos un esquema de Zod a un type
