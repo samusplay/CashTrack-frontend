@@ -3,13 +3,14 @@ import "server-only"
 
 //DATA Access layer
 //CAPA PARA saber si esta autenticado
-import { cookies } from "next/headers"
+
 import { redirect } from "next/navigation"
 import { cache } from "react"
 import { UserSchema } from "../schemas"
+import getToken from "./token"
 export const verifySession =cache( async () => {
     //le pasamos a cookies el COOKIE
-    const token = cookies().get('CASHTRACKR_TOKEN')?.value
+    const token =getToken()
 
     //comprobacion si no posse el token
     if (!token) {

@@ -69,7 +69,18 @@ export const UserSchema = z.object({
         email: z.string().email()
 })
 
+export const BudgetAPIResponseSchema = z.object({
+        id: z.number(),
+        name: z.string(),
+        amount: z.string(),
+        userId: z.number(),
+        createdAt: z.string(),
+        updatedAt: z.string()
+})
+//Convertimos es shcema a un arreglo
+export const  BudgetsAPIResponseSchema=z.array( BudgetAPIResponseSchema)
 
 //definir schemas tambien Gnerar Types para el panel de admin
 //Pasamos un esquema de Zod a un type
 export type User=z.infer<typeof UserSchema>
+export type Budget=z.infer<typeof BudgetAPIResponseSchema>
