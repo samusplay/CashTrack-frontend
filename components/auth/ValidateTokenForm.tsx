@@ -1,14 +1,20 @@
 
 import { validateToken } from "@/actions/validate-token-action";
 import { PinInput, PinInputField } from "@chakra-ui/pin-input";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useFormState } from "react-dom";
+import { toast } from "react-toastify";
+type ValidateTokenProps={
+  setIsValidToken:Dispatch<SetStateAction<boolean>>
+  token:string
+  setToken:Dispatch<SetStateAction<string>>
 
-
-export default function ValidateTokenForm() {
+}
+//le pasamos los props a la funcion del handler 
+//Extraemos via Props delc omponente padre que es el Handler
+export default function ValidateTokenForm({setIsValidToken,token,setToken}:ValidateTokenProps) {
     //Requrimos un state
-    //Token va guardar en memoria los numeros
-    const[token,setToken]=useState('')
+    
     const[isComplete,setIsComplete]=useState(false)
     //copiamos lo campos de la funcion y bind le agregamos el token
     //Se va volver el primer parametro
@@ -18,6 +24,7 @@ export default function ValidateTokenForm() {
        errors:[],
        success:''
     })
+  
     //Debemos disparar dicha accion lpo logramos con useEfect
     //CUANDO Leea el estado de IsComplete
     //ssiempre va leer el use effect
@@ -28,6 +35,21 @@ export default function ValidateTokenForm() {
         }
 
     },[isComplete])
+    //vamos usar useEffect para iterar errores
+    //y muestre un Toast
+    useEffect(()=>{
+      if(state.errors){
+        state.errors.forEach(error=>{
+          toast.error(error)
+        })
+      }
+      //evaluamos cuando el token es exitoso
+      if(state.success){
+        toast.success(state.success)
+        setIsValidToken(true)
+      }
+
+    },[state])
 
   const handleChange = (token: string) => {
     //La funcion es cada vez que el usurio teclea o borra un numero

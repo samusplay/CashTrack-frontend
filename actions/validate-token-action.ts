@@ -1,6 +1,6 @@
 "use server"
 
-import { ErrorResponseSchema, TokenSchema } from "@/src/schemas";
+import { ErrorResponseSchema, SucccessSchema, TokenSchema } from "@/src/schemas";
 
 
 //El Type es la firma de nuestros tipos de datos
@@ -24,7 +24,8 @@ export async function validateToken(token: string, prevstate: ActionStateType) {
         }
     }
     //ENVIO DE PETICION HACIA EL BACKEND
-    const url = `${process.env.API_URL}/auth/validate token`
+    const url = `${process.env.API_URL}/auth/validate-token`
+    
     const req = await fetch(url, {
         //Objeto de configuracion
         method: 'POST',
@@ -39,11 +40,13 @@ export async function validateToken(token: string, prevstate: ActionStateType) {
     })
     //ESPERAMOS QUE NOS RESPONDA REQ CON EL FECTH
     const json = await req.json()
+    
+    
 
     //DEVOLVEMOS ERRORES
     if (!req.ok) {
         //sacamos la propiedad de error de zod
-        //Recordar que pasrse solo evalua si esos e adecua al Schema
+        //Recordar que pasrse solo evalua si es adecuado  al Schema
         const { error } = ErrorResponseSchema.parse(json)
         return {
             errors:[error],
@@ -51,10 +54,12 @@ export async function validateToken(token: string, prevstate: ActionStateType) {
 
         }
     }
+    //validamos el zod para que no sea un Any
+    const success=SucccessSchema.parse(json)
 
     //Debememos retornan dicha firma
     return {
         errors: [],
-        success: ''
+        success: success
     }
 }
