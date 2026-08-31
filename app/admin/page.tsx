@@ -22,6 +22,10 @@ async function getUserBudgets() {
             'Authorization': `Bearer ${token}`
 
         },
+        next:{
+            //solo hacer la consulta a l Tag
+            tags:['all-budgets']
+        }
 
     })
     const json = await req.json()

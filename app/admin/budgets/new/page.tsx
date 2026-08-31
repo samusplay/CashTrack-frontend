@@ -9,7 +9,7 @@ export default function CreateBudgetPage() {
           <h1 className='font-black text-4xl text-purple-950 my-5'>
             Nuevo Presupuesto
           </h1>
-          <p className="text-xl font-bold">Llena el formulario y crea un nuevo {''}
+          <p className="text-xl font-bold">Llena el formulario para editar un presupuesto {''}
             <span className="text-amber-500">presupuesto</span>
           </p>
         </div>

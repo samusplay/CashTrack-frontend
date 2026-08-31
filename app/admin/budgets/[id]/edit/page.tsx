@@ -1,34 +1,17 @@
-import getToken from "@/src/auth/token"
-import { BudgetAPIResponseSchema } from "@/src/schemas"
+import EditBudgetForm from "@/components/budgets/EditBudgetForm"
+
+import { getBudget } from "@/src/servicies/budget"
+import { Metadata } from "next"
 import Link from "next/link"
-import { notFound } from "next/navigation"
-//Routing dinamico acceder un recurdos por medio del ID
-//funcion para hacer fecth a la api osea GET
-const getBudget = async (budgetId: string) => {
-    //todos los request debe ser autenticados
-    const token = getToken()
-    const url = `${process.env.API_URL}/budgets/${budgetId} `
-
-    //Peticion
-    const req = await fetch(url, {
-        headers: {
-            //le inyectamos el tokeb
-            'Authorization': `Bearer ${token}`
-
-        },
-    })
-    //Respuesta
-    const json = await req.json()
-    //si no esta okey
-    if (!req.ok) {
-        //le mandamos una funcion de 404 que no se encontro dicho recurso
-        notFound()
 
 
+//hacer La metadata dinamica
+export async function generateMetadata({ params }: { params: { id: string }}):Promise<Metadata>{
+    const budget=await getBudget(params.id)
+    return{
+        title:`CashTrackr -${budget.name}`,
+        description:`CashTrackr -${budget.name}`
     }
-    //validamos el esquema 
-    const budget = BudgetAPIResponseSchema.parse(json)
-    return budget
 
 }
 
@@ -62,6 +45,9 @@ export default async function EditBudgetPage({ params }: { params: { id: string 
                 </Link>
             </div>
             <div className='p-10 mt-10  shadow-lg border '>
+                <EditBudgetForm
+                budget={budget}
+                />
 
             </div>
         </>
