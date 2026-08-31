@@ -22,16 +22,8 @@ export default function CreateBudgetForm() {
     //usamos el usee efefct para motrarles los mensajes y redirigirlo segun el state
     useEffect(()=>{
         if(state.success){
-            toast.success(state.success,{
-                //llevarlo a la pagina de ediacion del presupuesto
-                onClose:()=>{
-                    router.push('/admin')
-                },
-                onClick:()=>{
-                    router.push('/admin')
-                }
-                
-            })
+            toast.success(state.success)
+            router.push('/admin')
         }
 
     },[state])

@@ -3,9 +3,13 @@ import { Budget } from "@/src/schemas"
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Fragment } from "react"
 //Utilizamos el tip de zod para que en ufturo no cambie nuestra firma 
 export default function BudgetMenu({budgetId}:{budgetId:Budget['id']}) {
+  //Para hacer el comportamiento de elimianr requerimos el useRouter
+  const router=useRouter()
+
   return (
     <>
       <Menu as="div" className="relative flex-none">
@@ -44,7 +48,7 @@ export default function BudgetMenu({budgetId}:{budgetId:Budget['id']}) {
               <button
                 type='button'
                 className='block px-3 py-1 text-sm leading-6 text-red-500'
-                onClick={ () => {} }
+                onClick={ () => router.push(`?deleteBudgetId=${budgetId}`) }
               >
                 Eliminar Presupuesto
               </button>

@@ -77,6 +77,7 @@ export const BudgetAPIResponseSchema = z.object({
         createdAt: z.string(),
         updatedAt: z.string()
 })
+export const passwordValidationSchema=z.string().min(1,{message:'Password no valiado'})
 //Convertimos es shcema a un arreglo
 export const  BudgetsAPIResponseSchema=z.array( BudgetAPIResponseSchema)
 
