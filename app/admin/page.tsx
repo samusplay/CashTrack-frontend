@@ -66,7 +66,7 @@ export default async function AdminPage() {
                                 <div className="min-w-0 flex-auto space-y-2">
                                     <p className="text-sm font-semibold leading-6 text-gray-900">
                                         <Link
-                                        href={`/admin/budget/${budget.id}`}
+                                        href={`/admin/budgets/${budget.id}`}
                                         className="cursor-pointer hover:underline text-2xl font-bold"
                                         
                                         >
